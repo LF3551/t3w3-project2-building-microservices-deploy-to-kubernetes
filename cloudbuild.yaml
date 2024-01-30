@@ -16,6 +16,7 @@ steps:
     args: ['apply', '-f', 'mongodb-deployment.yaml']
     id: 'Deploy to GKE'
 
+
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/mysql-loader', './mysql_loader']
   #   id: 'Build MySQL Loader Image'
