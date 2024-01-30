@@ -2,16 +2,20 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader', './mongodb_loader']
     id: 'Build MongoDB Loader Image'
+    # Step to build the MongoDB Loader Docker image and tag it.
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader']
     id: 'Push MongoDB Loader Image'
+    # Step to push the MongoDB Loader Docker image to Artifact Registry.
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['container', 'clusters', 'get-credentials', 'kubecluster', '--region', 'us-central1', '--project', '$PROJECT_ID']
+    # Step to fetch cluster credentials for GKE cluster 'kubecluster' in the 'us-central1' region.
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'configure-docker', '--quiet']
+    # Step to configure Docker with authentication for GCR.
 
   - name: 'google/cloud-sdk'
     entrypoint: 'bash'
@@ -20,6 +24,10 @@ steps:
     - |
       kubectl apply -f mongodb-deployment.yaml
     id: 'Deploy to GKE'
+    # Step to deploy the MongoDB application to Google Kubernetes Engine (GKE).
+
+
+
 
 
   # - name: 'gcr.io/cloud-builders/docker'
