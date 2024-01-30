@@ -12,6 +12,7 @@ spec:
       labels:
         app: mongodb
     spec:
+      hostname: mongodb-deployment
       volumes:
         - name: mongodb-data
           persistentVolumeClaim:
