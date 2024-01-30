@@ -11,15 +11,16 @@ steps:
     args: ['container', 'clusters', 'get-credentials', 'kubecluster', '--region', 'us-central1', '--project', '$PROJECT_ID']
 
 
-  # Развертывание в GKE
-  - name: 'gcr.io/cloud-builders/kubectl'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['auth', 'configure-docker', '--quiet']
+
+  # Развертывание в GKE с использованием google/cloud-sdk
+  - name: 'google/cloud-sdk'
     entrypoint: 'bash'
     args:
     - '-c'
     - |
-      export CLOUDSDK_COMPUTE_REGION=us-central1
-      export CLOUDSDK_CONTAINER_CLUSTER=kubecluster
-      gcr.io/cloud-builders/kubectl apply -f mongodb-deployment.yaml
+      kubectl apply -f mongodb-deployment.yaml
     id: 'Deploy to GKE'
 
 
