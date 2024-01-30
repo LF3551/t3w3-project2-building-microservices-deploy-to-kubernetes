@@ -34,7 +34,7 @@ steps:
       kubectl apply -f mongodb-service.yaml
     id: 'Deploy MongoDB Service'
 
-# 2 initializing MongoDB (put data inside)
+# 2 initializing MongoDB init container (put data inside)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher', './mongodb_loader']
     id: 'Build Init MongoDB Data Fetcher Image'
@@ -51,6 +51,30 @@ steps:
       kubectl apply -f init-mongodb-data-fetcher-deployment.yaml
     id: 'Deploy Init MongoDB Data Fetcher to GKE'
 
+# 1 just fo Mysql DB
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader', './mysql_loader']
+    id: 'Build MySQL Loader Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader']
+    id: 'Push MySQL Loader Image'
+    
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mysql-deployment.yaml
+    id: 'Deploy MySQL to GKE'
+
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mysql-service.yaml
+    id: 'Deploy MySQL Service'
 
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/mysql-loader', './mysql_loader']
