@@ -1,40 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.32.0 (HEAD)
-  labels:
-    io.kompose.service: mongodb
-  name: mongodb
+  name: mongodb-loader-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: mongodb
-  strategy:
-    type: Recreate
+      app: mongodb-loader
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.32.0 (HEAD)
       labels:
-        io.kompose.network/t3w3-project2-building-microservices-deploy-to-kubernetes-app-network: "true"
-        io.kompose.service: mongodb
+        app: mongodb-loader
     spec:
       containers:
-        - image: mongo
-          name: mongodb-container
-          ports:
-            - containerPort: 27017
-              hostPort: 27017
-              protocol: TCP
-          volumeMounts:
-            - mountPath: /data/db
-              name: mongodb-claim0
-      restartPolicy: Always
-      volumes:
-        - name: mongodb-claim0
-          persistentVolumeClaim:
-            claimName: mongodb-claim0
+      - name: mongodb-loader
+        image: gcr.io/$PROJECT_ID/mongodb-loader:latest
+        ports:
+        - containerPort: 80
+
