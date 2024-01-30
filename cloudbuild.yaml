@@ -1,10 +1,10 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mongodb-loader', './mongodb_loader']
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader', './mongodb_loader']
     id: 'Build MongoDB Loader Image'
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/mongodb-loader']
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader']
     id: 'Push MongoDB Loader Image'
 
   - name: 'gcr.io/cloud-builders/gcloud'
