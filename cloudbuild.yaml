@@ -26,7 +26,13 @@ steps:
       kubectl apply -f mongodb-deployment.yaml
     id: 'Deploy to GKE'
     # Step to deploy the MongoDB application to Google Kubernetes Engine (GKE).
-
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mongodb-service.yaml
+    id: 'Deploy MongoDB Service'
 
 # 2 initializing MongoDB (put data inside)
   - name: 'gcr.io/cloud-builders/docker'
@@ -36,7 +42,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher']
     id: 'Push Init MongoDB Data Fetcher Image'
-    
+
   - name: 'google/cloud-sdk'
     entrypoint: 'bash'
     args:

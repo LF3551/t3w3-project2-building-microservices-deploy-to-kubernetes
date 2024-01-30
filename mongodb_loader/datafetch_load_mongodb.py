@@ -24,7 +24,7 @@ def save_to_mongodb(collection, data):
     else:
         print(f"No data to save to the {collection.name} collection.")
 
-connection_string = "mongodb://mongodb-container:27017/hogwarts"
+connection_string = "mongodb://mongodb-service:27017/hogwarts"
 client = pymongo.MongoClient(connection_string)
 
 try:
