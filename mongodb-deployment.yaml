@@ -1,20 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-loader-deployment
+  name: mongodb-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb-loader
+      app: mongodb
   template:
     metadata:
       labels:
-        app: mongodb-loader
+        app: mongodb
     spec:
+      volumes:
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb-data-pvc 
       containers:
-      - name: mongodb-loader
-        image: gcr.io/$PROJECT_ID/mongodb-loader:latest
-        ports:
-        - containerPort: 80
+        - name: mongodb
+          image: mongo
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /data/db
+          ports:
+            - containerPort: 27017
 
