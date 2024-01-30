@@ -4,4 +4,4 @@ COPY requirements.txt /app/
 RUN ls -la /app/
 RUN pip install -r requirements.txt
 COPY datatransfer_mongodb_mysql.py /app/
-CMD ["python", "/app/mongodb_loader/datatransfer_mongodb_mysql.py"]
+CMD ["python", "/app/datatransfer_mongodb_mysql.py"]
