@@ -1,20 +1,18 @@
 steps:
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/mongodb-loader', './mongodb_loader']
-  #   id: 'Build MongoDB Loader Image'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mongodb-loader', './mongodb_loader']
+    id: 'Build MongoDB Loader Image'
 
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push', 'gcr.io/$PROJECT_ID/mongodb-loader']
-  #   id: 'Push MongoDB Loader Image'
-   # Получение учетных данных кластера GKE
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/mongodb-loader']
+    id: 'Push MongoDB Loader Image'
+
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['container', 'clusters', 'get-credentials', 'kubecluster', '--region', 'us-central1', '--project', '$PROJECT_ID']
-
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'configure-docker', '--quiet']
 
-  # Развертывание в GKE с использованием google/cloud-sdk
   - name: 'google/cloud-sdk'
     entrypoint: 'bash'
     args:
