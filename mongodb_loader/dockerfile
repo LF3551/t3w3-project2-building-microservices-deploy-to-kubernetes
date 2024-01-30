@@ -3,4 +3,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . /app
-CMD ["python", "mongodb_loader/datafetch_load_mongodb.py"]
+CMD ["python", "/app/datafetch_load_mongodb.py"]
