@@ -51,7 +51,7 @@ steps:
       kubectl apply -f init-mongodb-data-fetcher-deployment.yaml
     id: 'Deploy Init MongoDB Data Fetcher to GKE'
 
-# 1 just fo Mysql DB
+# 3 just fo Mysql DB
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader', './mysql_loader']
     id: 'Build MySQL Loader Image'
@@ -59,7 +59,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader']
     id: 'Push MySQL Loader Image'
-    
+
   - name: 'google/cloud-sdk'
     entrypoint: 'bash'
     args:
@@ -75,6 +75,27 @@ steps:
     - |
       kubectl apply -f mysql-service.yaml
     id: 'Deploy MySQL Service'
+
+
+
+# 3 just for ETL
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app', './mysql_loader']
+    id: 'Build ETL App Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app']
+    id: 'Push ETL App Image'
+
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f etl-app-deployment.yaml
+    id: 'Deploy ETL App to GKE'
+
+
 
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/mysql-loader', './mysql_loader']

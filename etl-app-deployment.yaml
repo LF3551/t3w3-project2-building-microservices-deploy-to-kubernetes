@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etl-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etl-app
+  template:
+    metadata:
+      labels:
+        app: etl-app
+    spec:
+      containers:
+      - name: etl-app
+        image: 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app'
+        env:
+        - name: MYSQL_HOST
+          value: 'mysql-service'
+        - name: MYSQL_USER
+          value: 'admin'
+        - name: MYSQL_PASSWORD
+          value: 'admin'
+        - name: MYSQL_DATABASE
+          value: 'hogwarts'
+        - name: MONGODB_HOST
+          value: 'mongodb-service'
+        - name: MONGODB_PORT
+          value: '27017'

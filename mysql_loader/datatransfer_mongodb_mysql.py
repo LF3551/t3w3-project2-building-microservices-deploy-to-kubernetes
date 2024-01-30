@@ -2,12 +2,12 @@ import pymongo
 import mysql.connector
 import time
 
-mysql_host = "mysql-container"
+mysql_host = "mysql-service"
 mysql_user = "admin"
 mysql_password = "admin"
 mysql_database = "hogwarts"
 
-mongodb_host = "mongodb-container"
+mongodb_host = "mongodb-service"
 mongodb_port = 27017
 mongodb_database = "hogwarts"
 mongodb_client = pymongo.MongoClient(mongodb_host, mongodb_port)
