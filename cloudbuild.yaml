@@ -13,7 +13,13 @@ steps:
 
   # Развертывание в GKE
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'mongodb-deployment.yaml']
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      export CLOUDSDK_COMPUTE_REGION=us-central1
+      export CLOUDSDK_CONTAINER_CLUSTER=kubecluster
+      gcr.io/cloud-builders/kubectl apply -f mongodb-deployment.yaml
     id: 'Deploy to GKE'
 
 
