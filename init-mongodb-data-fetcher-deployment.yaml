@@ -15,3 +15,11 @@ spec:
       containers:
         - name: init-mongodb-data-fetcher
           image: europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
