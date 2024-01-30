@@ -1,4 +1,5 @@
 steps:
+# 1 just fo Mongo DB
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader', './mongodb_loader']
     id: 'Build MongoDB Loader Image'
@@ -27,7 +28,22 @@ steps:
     # Step to deploy the MongoDB application to Google Kubernetes Engine (GKE).
 
 
+# 2 initializing MongoDB (put data inside)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher', './mongodb_loader']
+    id: 'Build Init MongoDB Data Fetcher Image'
 
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher']
+    id: 'Push Init MongoDB Data Fetcher Image'
+    
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f init-mongodb-data-fetcher-deployment.yaml
+    id: 'Deploy Init MongoDB Data Fetcher to GKE'
 
 
   # - name: 'gcr.io/cloud-builders/docker'

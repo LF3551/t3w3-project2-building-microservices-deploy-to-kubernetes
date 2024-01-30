@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-mongodb-data-fetcher-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: init-mongodb-data-fetcher
+  template:
+    metadata:
+      labels:
+        app: init-mongodb-data-fetcher
+    spec:
+      containers:
+        - name: init-mongodb-data-fetcher
+          image: europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher
