@@ -63,16 +63,3 @@ steps:
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['push', 'LOCATION-docker.pkg.dev/PROJECT-ID/REPOSITORY/IMAGE:TAG']
 
-  # Set up kubectl
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gcloud container clusters get-credentials kubecluster --zone us-central1 --project container-412111
-        kubectl set image deployment/mysql-deployment.yaml CONTAINER_NAME=mysql-deployment
-
-  # # Деплой сервисов в GKE
-  # - name: 'gcr.io/cloud-builders/kubectl'
-  #   args: ['apply', '-f', 'etl-app-deployment.yaml']
-  #   id: 'Deploy ETL App'
