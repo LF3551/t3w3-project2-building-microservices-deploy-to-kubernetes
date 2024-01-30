@@ -1,99 +1,99 @@
 steps:
-# # 1 just fo Mongo DB
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader', './mongodb_loader']
-#     id: 'Build MongoDB Loader Image'
-#     # Step to build the MongoDB Loader Docker image and tag it.
+# 1 just fo Mongo DB
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader', './mongodb_loader']
+    id: 'Build MongoDB Loader Image'
+    # Step to build the MongoDB Loader Docker image and tag it.
 
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader']
-#     id: 'Push MongoDB Loader Image'
-#     # Step to push the MongoDB Loader Docker image to Artifact Registry.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mongodb-loader']
+    id: 'Push MongoDB Loader Image'
+    # Step to push the MongoDB Loader Docker image to Artifact Registry.
 
-#   - name: 'gcr.io/cloud-builders/gcloud'
-#     args: ['container', 'clusters', 'get-credentials', 'kubecluster', '--region', 'us-central1', '--project', '$PROJECT_ID']
-#     # Step to fetch cluster credentials for GKE cluster 'kubecluster' in the 'us-central1' region.
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['container', 'clusters', 'get-credentials', 'kubecluster', '--region', 'us-central1', '--project', '$PROJECT_ID']
+    # Step to fetch cluster credentials for GKE cluster 'kubecluster' in the 'us-central1' region.
 
-#   - name: 'gcr.io/cloud-builders/gcloud'
-#     args: ['auth', 'configure-docker', '--quiet']
-#     # Step to configure Docker with authentication for GCR.
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['auth', 'configure-docker', '--quiet']
+    # Step to configure Docker with authentication for GCR.
 
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f mongodb-deployment.yaml
-#     id: 'Deploy to GKE'
-#     # Step to deploy the MongoDB application to Google Kubernetes Engine (GKE).
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f mongodb-service.yaml
-#     id: 'Deploy MongoDB Service'
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mongodb-deployment.yaml
+    id: 'Deploy to GKE'
+    # Step to deploy the MongoDB application to Google Kubernetes Engine (GKE).
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mongodb-service.yaml
+    id: 'Deploy MongoDB Service'
 
-# # 2 initializing MongoDB init container (put data inside)
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher', './mongodb_loader']
-#     id: 'Build Init MongoDB Data Fetcher Image'
+# 2 initializing MongoDB init container (put data inside)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher', './mongodb_loader']
+    id: 'Build Init MongoDB Data Fetcher Image'
 
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher']
-#     id: 'Push Init MongoDB Data Fetcher Image'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/init-mongodb-data-fetcher']
+    id: 'Push Init MongoDB Data Fetcher Image'
 
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f init-mongodb-data-fetcher-deployment.yaml
-#     id: 'Deploy Init MongoDB Data Fetcher to GKE'
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f init-mongodb-data-fetcher-deployment.yaml
+    id: 'Deploy Init MongoDB Data Fetcher to GKE'
 
-# # 3 just fo Mysql DB
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader', './mysql_loader']
-#     id: 'Build MySQL Loader Image'
+# 3 just fo Mysql DB
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader', './mysql_loader']
+    id: 'Build MySQL Loader Image'
 
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader']
-#     id: 'Push MySQL Loader Image'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/mysql-loader']
+    id: 'Push MySQL Loader Image'
 
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f mysql-deployment.yaml
-#     id: 'Deploy MySQL to GKE'
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mysql-deployment.yaml
+    id: 'Deploy MySQL to GKE'
 
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f mysql-service.yaml
-#     id: 'Deploy MySQL Service'
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f mysql-service.yaml
+    id: 'Deploy MySQL Service'
 
 
 
-# # 4 just for ETL
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app', './mysql_loader']
-#     id: 'Build ETL App Image'
+# 4 just for ETL
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app', './mysql_loader']
+    id: 'Build ETL App Image'
 
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app']
-#     id: 'Push ETL App Image'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-docker.pkg.dev/container-412111/hogwarts/etl-app']
+    id: 'Push ETL App Image'
 
-#   - name: 'google/cloud-sdk'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       kubectl apply -f etl-app-deployment.yaml
-#     id: 'Deploy ETL App to GKE'
+  - name: 'google/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      kubectl apply -f etl-app-deployment.yaml
+    id: 'Deploy ETL App to GKE'
 
 
 # 5 final Metabase
